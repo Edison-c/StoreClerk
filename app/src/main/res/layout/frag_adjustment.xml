@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/frag_disbursement"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="#f4f4f4"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:background="#f4f4f4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adjustment Voucher"
+            android:textSize="30dp"
+            android:gravity="center"/>
+        <LinearLayout
+            android:background="#dedede"
+            android:orientation="horizontal"
+            android:id="@+id/adjustment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="2"
+                android:id="@+id/adj_item"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item"
+                android:textSize="15sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/adj_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:textSize="15sp" />
+            <TextView
+                android:gravity="center"
+                android:layout_weight="4"
+                android:id="@+id/adj_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reason"
+                android:textSize="15sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/adj_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:padding="8dp"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="400dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+
+            <Button
+                android:id="@+id/add_new"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:text="+"
+                android:background="@drawable/shape"
+                android:layout_marginRight="10dp"
+                android:textSize="15sp"/>
+            <Button
+                android:id="@+id/adj_done"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:text="Submit"
+                android:background="@drawable/shape"
+                android:layout_marginRight="10dp"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

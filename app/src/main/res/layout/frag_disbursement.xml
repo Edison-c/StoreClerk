@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/frag_disbursement"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f4f4f4">
+
+
+        <TextView
+            android:background="#f4f4f4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Disbursement List"
+            android:textSize="30dp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:background="#dedede"
+            android:orientation="horizontal"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/dis_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dept"
+                android:textSize="15sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/dis_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Collect Point"
+                android:textSize="15sp" />
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/dis_actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date"
+                android:textSize="15sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/dis_remarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status"
+                android:padding="8dp"
+                android:textSize="15sp" />
+        </LinearLayout>
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    </LinearLayout>

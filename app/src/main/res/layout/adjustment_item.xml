@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <EditText
+        android:gravity="center"
+        android:id="@+id/adj_item"
+        android:layout_weight="2"
+        android:layout_width="270px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:inputType="textMultiLine"
+        android:minLines="8"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:enabled="true"/>
+
+    <EditText
+        android:gravity="center"
+        android:layout_weight="1"
+        android:id="@+id/adj_quantity"
+        android:layout_width="135px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:inputType="textMultiLine"
+        android:minLines="8"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:enabled="true"/>
+    <EditText
+        android:gravity="center"
+        android:layout_weight="4"
+        android:id="@+id/adj_reason"
+        android:layout_width="540px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        android:inputType="textMultiLine"
+        android:minLines="8"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:enabled="true"/>
+
+    <Button
+        android:text="delete"
+        android:id="@+id/adj_delete"
+        android:layout_width="135px"
+        android:layout_height="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:textSize="10sp" />
+
+</LinearLayout>

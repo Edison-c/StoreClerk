@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/frag_retrieval"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f4f4f4">
+
+
+        <TextView
+            android:background="#f4f4f4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retrieval List"
+            android:textSize="30dp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:id="@+id/ll_date"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_date1"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:background="#ededed"
+                android:padding="8dp"
+                android:text="2019-7-1"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="To:"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/tv_date"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:background="#ededed"
+                android:padding="8dp"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/searchdate"
+                android:layout_marginLeft="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:background="@drawable/shape"
+                android:layout_gravity="center_vertical"
+                android:text="Search"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#dedede"
+            android:orientation="horizontal"
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desc"
+                android:textSize="18sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/dept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dept"
+                android:textSize="18sp" />
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/need"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Needed"
+                android:textSize="18sp" />
+
+            <TextView
+                android:gravity="center"
+                android:layout_weight="1"
+                android:id="@+id/actual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actual"
+                android:padding="8dp"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+
+        <ExpandableListView
+            android:id="@+id/expandableListView"
+            android:layout_height="370dp"
+            android:layout_width="match_parent"
+            android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="0.5dp" />
+        <Button
+            android:id="@+id/ret_done"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:text="Submit"
+            android:background="@drawable/shape"
+            android:layout_marginRight="10dp"
+            android:textSize="15sp"/>
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
