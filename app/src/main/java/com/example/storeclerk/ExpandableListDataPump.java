@@ -28,8 +28,8 @@ public class ExpandableListDataPump {
 
         Groupname Cricket22 = new Groupname("Rule","ISS","10","4");
         Groupname Cricket23 = new Groupname("Rule","SOC","5","5");
-        Groupname Cricket24 = new Groupname("Rule","EE","5","6");
-        Groupname Cricket25 = new Groupname("Rule","EE","5","7");
+        Groupname Cricket24 = new Groupname("Rule","EE","3","6");
+        Groupname Cricket25 = new Groupname("Rule","EE","2","7");
 
 
         cricket3.add(Cricket22);

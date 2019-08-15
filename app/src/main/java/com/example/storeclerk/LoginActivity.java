@@ -55,15 +55,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     e.printStackTrace();
                 }
 
-//                cmd = new Command(LoginActivity.this, "set",
-//                        "http://10.0.2.2:50240/Login/SetPerson", jsonObj,"Login");
-//                new AsyncToServer().execute(cmd);
+                cmd = new Command(LoginActivity.this, "set",
+                        "http://10.0.2.2:50240/Login/SetPerson", jsonObj);
+                new AsyncToServer().execute(cmd);
+                break;
                 //for testing
-                Intent intent = new Intent(this,MainActivity.class);
-                intent.putExtra("username","An");
-                intent.putExtra("sessionid","agagag");
-                startActivity(intent);
-                finish();
+//                Intent intent = new Intent(this,MainActivity.class);
+//                intent.putExtra("username","Judy");
+//                intent.putExtra("sessionid","agagag");
+//                startActivity(intent);
+//                finish();
                 }
         }
     }
@@ -78,13 +79,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         try {
             String context = (String) jsonObj.get("context");
 
+
             if (context.compareTo("set") == 0)
             {
-                if(jsonObj.get("status") == "fail"){
+                String status = (String )jsonObj.get("status");
+                if(status.compareTo("fail")==0){
                     Toast.makeText(this,"Wrong username or password",Toast.LENGTH_SHORT).show();
 
                 }
-                else {
+                else if(status.compareTo("success")==0) {
                     String name = (String) jsonObj.get("username");
                     String sessionid = (String) jsonObj.get("sessionId");
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);

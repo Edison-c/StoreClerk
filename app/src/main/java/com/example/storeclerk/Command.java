@@ -7,15 +7,13 @@ public class Command {
     protected String context;
     protected String endPt;
     protected JSONObject data;
-    protected String target;
 
     Command(AsyncToServer.IServerResponse callback,
-            String context, String endPt, JSONObject data,String target)
+            String context, String endPt, JSONObject data)
     {
         this.callback = callback;
         this.context = context;
         this.endPt = endPt;
         this.data = data;
-        this.target = target;
     }
 }
