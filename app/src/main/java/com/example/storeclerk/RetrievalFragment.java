@@ -62,13 +62,13 @@ public class RetrievalFragment extends Fragment
     }
 
     private void initView() {
-        llDate = v1.findViewById(R.id.ll_date);
-        tvDate = v1.findViewById(R.id.tv_date);
-        search = v1.findViewById(R.id.searchdate);
+//        llDate = v1.findViewById(R.id.ll_date);
+//        tvDate = v1.findViewById(R.id.tv_date);
+//        search = v1.findViewById(R.id.searchdate);
         ret_done = v1.findViewById(R.id.ret_done);
         ret_done.setOnClickListener(this);
-        search.setOnClickListener(this);
-        llDate.setOnClickListener(this);
+//        search.setOnClickListener(this);
+//        llDate.setOnClickListener(this);
 
     }
 
@@ -94,7 +94,7 @@ public class RetrievalFragment extends Fragment
         context =this.getActivity() ;
         date = new StringBuffer();
         initView();
-        initDateTime();
+//        initDateTime();
         expandableListView = v1.findViewById(R.id.expandableListView);
         expandableListDetail = ExpandableListDataPump.getData();
         expandableListTitle = new ArrayList<Groupname>(expandableListDetail.keySet());
@@ -130,39 +130,39 @@ public class RetrievalFragment extends Fragment
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_date:
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (date.length() > 0) {
-                            date.delete(0, date.length());
-                        }
-                        tvDate.setText(date.append(String.valueOf(year)).append("-").append(String.valueOf(month+1)).append("-").append(day).append(""));
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                final AlertDialog dialog = builder.create();
-                View dialogView = View.inflate(context, R.layout.dialog_date, null);
-                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
+//            case R.id.ll_date:
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        if (date.length() > 0) {
+//                            date.delete(0, date.length());
+//                        }
+//                        tvDate.setText(date.append(String.valueOf(year)).append("-").append(String.valueOf(month+1)).append("-").append(day).append(""));
+//                        dialog.dismiss();
+//                    }
+//                });
+//                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                final AlertDialog dialog = builder.create();
+//                View dialogView = View.inflate(context, R.layout.dialog_date, null);
+//                final DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.datePicker);
+//
+//                dialog.setTitle("Setting Date");
+//                dialog.setView(dialogView);
+//                dialog.show();
+//
+//                datePicker.init(year, month , day, this);
+//                break;
 
-                dialog.setTitle("Setting Date");
-                dialog.setView(dialogView);
-                dialog.show();
-
-                datePicker.init(year, month , day, this);
-                break;
-
-            case R.id.searchdate:
-                String todate = tvDate.getText().toString();
-                Toast.makeText(getActivity(),todate+" Selected",Toast.LENGTH_SHORT).show();
-                break;
+//            case R.id.searchdate:
+//                String todate = tvDate.getText().toString();
+//                Toast.makeText(getActivity(),todate+" Selected",Toast.LENGTH_SHORT).show();
+//                break;
 
             case R.id.ret_done:
                 post_retdata = expandableListAdapter.ret_data();

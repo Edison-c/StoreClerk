@@ -117,7 +117,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         sessionid = bundle.getString("sessionid");
         user = findViewById(R.id.mainpageusername);
         signout = findViewById(R.id.signout);
-        tvDate = findViewById(R.id.tv_date);
+//        tvDate = findViewById(R.id.tv_date);
         user.setText(username);
         signout.setOnClickListener(this);
 
