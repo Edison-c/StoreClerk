@@ -26,8 +26,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +46,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
     private Button signout;
 
+    private  Command cmd;
 
     private Bundle data;
     private  Bundle data1;
@@ -56,7 +59,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Command cmd;
+
             Date date = new Date();
             JSONObject obj = new JSONObject();
             try{
@@ -78,10 +81,19 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                     replaceFrag(adj, R.id.fragmentSpot);
                     return true;
                 case R.id.navigation_notifications:
-                    Fragment a = new DisbursementFragment();
-                    a.setArguments(data);
-                    replaceFrag(a, R.id.fragmentSpot);
-                    return true;
+
+                    JSONObject jsonObj = new JSONObject();
+                    try {
+                        jsonObj.put("username", "guoan");
+                        jsonObj.put("password", "password");
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    cmd = new Command(MainActivity.this, "get",
+                           "http://10.0.2.2:50240/DisbursementLists/GetDisbursementList",null);
+                  new AsyncToServer().execute(cmd);
+                  break;
             }
             return false;
         }
@@ -95,7 +107,6 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         trans.commit();
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +114,6 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
-
     }
 
     @Override
@@ -120,15 +130,6 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 //        tvDate = findViewById(R.id.tv_date);
         user.setText(username);
         signout.setOnClickListener(this);
-
-
-        items.add(new DisbursementItem("ISS", "China","2019-7-1","Pending"));
-        items.add(new DisbursementItem("SOC", "Sun","2019-7-1","Pending"));
-        items.add(new DisbursementItem("EE", "Japan","2019-7-1","Pending"));
-        items.add(new DisbursementItem("IT", "Heaven","2019-7-1","Pending"));
-        items.add(new DisbursementItem("SCI", "Moon","2019-7-1","Pending"));
-        data = new Bundle();
-        data.putSerializable("items", items);
 
         details.add(new DisbursementDetail("Pen", "10","1","Pending"));
         details.add(new DisbursementDetail("Rule", "9","2","Pending"));
@@ -162,9 +163,23 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
             if (context.compareTo("get") == 0)
             {
-                String name = (String)jsonObj.get("name");
-                int age = (int) jsonObj.get("age");
-                System.out.println("name: " + name + ", age: " + age);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                JSONObject aa =  (JSONObject) jsonObj.get("data");
+//                JSONArray bb = aa.getJSONArray("id");
+                JSONArray DepartmentCode = aa.getJSONArray("DepartmentCode");
+                JSONArray CollectionPointname = aa.getJSONArray("CollectionPointname");
+                JSONArray Date = aa.getJSONArray("Date");
+                JSONArray Status = aa.getJSONArray("Status");
+                for(int i = 0;i<5;i++){
+                    Long bb = Long.parseLong(Date.getString(i).substring(6,19));
+                    Date date = new Date(bb);
+                  items.add(new DisbursementItem(DepartmentCode.getString(i), CollectionPointname.getString(i),format.format(date),Status.getString(i)));
+              }
+                data = new Bundle();
+                data.putSerializable("items", items);
+                Fragment a = new DisbursementFragment();
+                a.setArguments(data);
+                replaceFrag(a, R.id.fragmentSpot);
             }
             else if (context.compareTo("set") == 0)
             {
