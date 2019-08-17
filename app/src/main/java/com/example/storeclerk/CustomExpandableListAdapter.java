@@ -76,6 +76,23 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         viewHolder.ret_actual.addTextChangedListener(paramsWatcher);
         viewHolder.ret_actual.setTag(paramsWatcher);
 
+        TextView expandedListTextView_1 = convertView
+                .findViewById(R.id.expandedListItem_1);
+        expandedListTextView_1.setText(expandedListText.getDesc());
+
+
+        TextView expandedListTextView_2 = convertView
+                .findViewById(R.id.expandedListItem_2);
+        expandedListTextView_2.setText(expandedListText.getDept());
+
+        TextView expandedListTextView_3 = convertView
+                .findViewById(R.id.expandedListItem_3);
+        expandedListTextView_3.setText(expandedListText.getNeeded());
+
+        TextView expandedListTextView_4 = convertView
+                .findViewById(R.id.expandedListItem_4);
+        expandedListTextView_4.setText(expandedListText.getNeeded());
+
         TextView expandedListTextView = convertView
                 .findViewById(R.id.expandedListItem1);
         expandedListTextView.setText(expandedListText.getDesc());

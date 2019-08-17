@@ -95,8 +95,15 @@ public class RetrievalFragment extends Fragment
         date = new StringBuffer();
         initView();
 //        initDateTime();
+
+        List<Groupname> retrievalitem = null;
+
+        Bundle bundle = getArguments();
+        if (bundle != null) {
+            retrievalitem = (ArrayList<Groupname>)bundle.getSerializable("retdata");
+        }
         expandableListView = v1.findViewById(R.id.expandableListView);
-        expandableListDetail = ExpandableListDataPump.getData();
+        expandableListDetail = ExpandableListDataPump.getData(retrievalitem);
         expandableListTitle = new ArrayList<Groupname>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(context, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);

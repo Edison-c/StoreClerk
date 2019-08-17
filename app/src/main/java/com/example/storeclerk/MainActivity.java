@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
     private  TextView user;
     private ArrayList<DisbursementItem> items;
     private ArrayList<DisbursementDetail> details;
+    private ArrayList<Groupname> retdata;
     private ArrayList<AdjustmentItem> ajustments = new ArrayList<>();
 
     private Button signout;
@@ -84,7 +85,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                     cmd = new Command(MainActivity.this, "getdislist",
                            "http://10.0.2.2:50240/DisbursementLists/GetDisbursementList",null);
                   new AsyncToServer().execute(cmd);
-                  break;
+                  return true;
             }
             return false;
         }
@@ -104,7 +105,12 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
+        cmd = new Command(MainActivity.this, "getRetrieval",
+                           "http://10.0.2.2:50240/StationeryRetrievalForms/GetRetrieval",null);
+                  new AsyncToServer().execute(cmd);
+
+
+       // replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
     }
 
     @Override
@@ -130,11 +136,9 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
     @Override
     public void onClick(View view){
-        switch (view.getId()) {
-            case R.id.signout:
+        if (view.getId()== R.id.signout) {
                 Intent backtologin = new Intent(this, LoginActivity.class);
                 startActivity(backtologin);
-                break;
         }
     }
 
@@ -207,6 +211,28 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                         "http://10.0.2.2:50240/DisbursementLists/GetDisbursementList",null);
                 new AsyncToServer().execute(cmd);
                 Toast.makeText(this,"Detail Submited Successfully",Toast.LENGTH_LONG).show();
+            }
+            else if(context.compareTo("getRetrieval")==0){
+                Toast.makeText(this,"Retrieval Successfully",Toast.LENGTH_LONG).show();
+                retdata  = new ArrayList<>();
+                JSONObject aa =  (JSONObject) jsonObj.get("data");
+                JSONArray FormNumber = aa.getJSONArray("FormNumber");
+                JSONArray FormDetailsnumber = aa.getJSONArray("FormDetailsnumber");
+                JSONArray ItemNumber = aa.getJSONArray("ItemNumber");
+                JSONArray BinNumber = aa.getJSONArray("BinNumber");
+                JSONArray Description = aa.getJSONArray("Description");
+                JSONArray Dept = aa.getJSONArray("Dept");
+                JSONArray Needed = aa.getJSONArray("Needed");
+                JSONArray Actual = aa.getJSONArray("Actual");
+
+                for(int i = 0;i<Dept.length();i++){
+                    retdata.add(new Groupname(FormNumber.getString(i),FormDetailsnumber.getString(i), ItemNumber.getString(i),BinNumber.getString(i),Description.getString(i),Dept.getString(i), Needed.getString(i),Actual.getString(i)));
+                }
+                data = new Bundle();
+                data.putSerializable("retdata", retdata);
+                Fragment a = new DisbursementFragment();
+                a.setArguments(data);
+                replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
             }
         }
         catch (Exception e) {
