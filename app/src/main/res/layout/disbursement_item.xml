@@ -5,6 +5,15 @@
     android:orientation="horizontal">
 
     <TextView
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/deptId"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:textSize="15sp"/>
+
+    <TextView
         android:gravity="center"
         android:id="@+id/deptView"
         android:layout_weight="1"

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdjustmentFragment extends ListFragment implements View.OnClickListener {
+    AdjustmentFragment.resultInterface1 callback;
 
     public AdjustmentFragment() {
     }
@@ -37,7 +38,7 @@ public class AdjustmentFragment extends ListFragment implements View.OnClickList
 
 
         listItemAdapter= new MySimpleAdapter(getActivity(), adjustmentitems,
-                R.layout.adjustment_item, new String[]{ "item", "quantity","reason","delete" },
+                R.layout.adjustment_item, new String[]{ "ItemNumber", "QuantityAdjusted","Reason","delete" },
                 new int[]{R.id.adj_item, R.id.adj_quantity,R.id.adj_reason,R.id.adj_delete});
         setListAdapter(listItemAdapter);
 
@@ -90,7 +91,16 @@ public class AdjustmentFragment extends ListFragment implements View.OnClickList
 
             case R.id.adj_done:
                 postdata = listItemAdapter.adj_data();
+                callback.onReturnResults1(postdata);
                 break;
         }
+    }
+
+    public void setCallback(AdjustmentFragment.resultInterface1 callback) {
+        this.callback = callback;
+    }
+
+    public interface resultInterface1 {
+        void onReturnResults1(List<AdjustmentItem> postdata);
     }
 }

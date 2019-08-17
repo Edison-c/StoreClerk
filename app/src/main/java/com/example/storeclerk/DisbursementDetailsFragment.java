@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DisbursementDetailsFragment extends ListFragment implements View.OnClickListener {
+    DisbursementDetailsFragment.resultInterface2 callback;
     public DisbursementDetailsFragment(){
 
     }
@@ -25,16 +26,14 @@ public class DisbursementDetailsFragment extends ListFragment implements View.On
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.frag_disbursementdetail, container, false);
-        String dept = null;
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            dept = bundle.getString("dept");
             disbursementdetails = (ArrayList<DisbursementDetail>)bundle.getSerializable("details");
         }
         disAdapter = new DisDetalAdapter(getActivity(), disbursementdetails,
-                R.layout.disbursementdetail_item, new String[]{ "desc", "quantity","actual","remark" },
-                new int[]{R.id.detail_desc, R.id.detail_quantity,R.id.detail_actual,R.id.detail_remark});
+                R.layout.disbursementdetail_item, new String[]{"detailId","listId","ItemNumber","Category", "desc", "quantity","actual","remark" },
+                new int[]{R.id.detail_id,R.id.detail_listid,R.id.detail_ItemNumber,R.id.detail_Category,R.id.detail_desc, R.id.detail_quantity,R.id.detail_actual,R.id.detail_remark});
         setListAdapter(disAdapter);
         return v;
     }
@@ -51,6 +50,15 @@ public class DisbursementDetailsFragment extends ListFragment implements View.On
     public void onClick(View view){
         if(view.getId()==R.id.dis_done){
                 dis_data = disAdapter.dis_data();
+                callback.onReturnResults2(dis_data);
         }
+    }
+
+    public void setCallback(DisbursementDetailsFragment.resultInterface2 callback) {
+        this.callback = callback;
+    }
+
+    public interface resultInterface2 {
+        void onReturnResults2(List<DisbursementDetail> postdata);
     }
 }

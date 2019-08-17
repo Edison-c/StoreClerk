@@ -22,18 +22,16 @@ public class DisbursementFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
             View v = inflater.inflate(R.layout.frag_disbursement, container, false);
-        String meta = null;
         List<DisbursementItem> disbursementitem = null;
 
         Bundle bundle = getArguments();
         if (bundle != null) {
-            meta = bundle.getString("meta");
             disbursementitem = (ArrayList<DisbursementItem>)bundle.getSerializable("items");
         }
 
         setListAdapter(((new SimpleAdapter(getActivity(), disbursementitem,
-                R.layout.disbursement_item, new String[]{ "dept", "collectionpoint","collectiondate","status" },
-                new int[]{R.id.deptView, R.id.collectionpointView,R.id.collectiondateView,R.id.statusView}))));
+                R.layout.disbursement_item, new String[]{"id", "dept", "collectionpoint","collectiondate","status" },
+                new int[]{R.id.deptId,R.id.deptView, R.id.collectionpointView,R.id.collectiondateView,R.id.statusView}))));
             return v;
             }
 
@@ -42,7 +40,7 @@ public class DisbursementFragment extends ListFragment {
     {
         super.onListItemClick(av, v, pos, id);
         DisbursementItem item = (DisbursementItem) av.getItemAtPosition(pos);
-        callback.onReturnResults(item.get("dept").toString());
+        callback.onReturnResults(item.get("id").toString());
 
         Toast.makeText(getActivity(), item.get("dept") + " selected",Toast.LENGTH_SHORT).show();
     }
@@ -52,6 +50,6 @@ public class DisbursementFragment extends ListFragment {
     }
 
     public interface resultInterface {
-        void onReturnResults(String dept);
+        void onReturnResults(String id);
     }
 }

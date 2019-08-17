@@ -50,28 +50,28 @@ public class MySimpleAdapter extends SimpleAdapter{
         if (viewHolder.reason.getTag() instanceof TextWatcher) {
             viewHolder.reason.removeTextChangedListener((TextWatcher) (viewHolder.reason.getTag()));
         }
-        viewHolder.reason.setText(itemObj.get("reason").toString());
+        viewHolder.reason.setText(itemObj.get("Reason").toString());
 
         if (viewHolder.quantity.getTag() instanceof TextWatcher) {
             viewHolder.quantity.removeTextChangedListener((TextWatcher) (viewHolder.quantity.getTag()));
         }
-        viewHolder.quantity.setText(itemObj.get("quantity").toString());
+        viewHolder.quantity.setText(itemObj.get("QuantityAdjusted").toString());
 
         if (viewHolder.item.getTag() instanceof TextWatcher) {
             viewHolder.item.removeTextChangedListener((TextWatcher) (viewHolder.item.getTag()));
         }
-        viewHolder.item.setText(itemObj.get("item").toString());
+        viewHolder.item.setText(itemObj.get("ItemNumber").toString());
 
         TextWatcher paramsWatcher2 = new SimpeTextWather(viewHolder.reason) {
 
             @Override
             public void  afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
-                    itemObj.remove("reason");
-                    itemObj.put("reason","");
+                    itemObj.remove("Reason");
+                    itemObj.put("Reason","");
                 } else {
-                    itemObj.remove("reason");
-                    itemObj.put("reason",s.toString());
+                    itemObj.remove("Reason");
+                    itemObj.put("Reason",s.toString());
                 }
 
             }
@@ -84,11 +84,11 @@ public class MySimpleAdapter extends SimpleAdapter{
             @Override
             public void  afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
-                    itemObj.remove("quantity");
-                    itemObj.put("quantity","");
+                    itemObj.remove("QuantityAdjusted");
+                    itemObj.put("QuantityAdjusted","");
                 } else {
-                    itemObj.remove("quantity");
-                    itemObj.put("quantity",s.toString());
+                    itemObj.remove("QuantityAdjusted");
+                    itemObj.put("QuantityAdjusted",s.toString());
                 }
 
             }
@@ -102,11 +102,11 @@ public class MySimpleAdapter extends SimpleAdapter{
             @Override
             public void  afterTextChanged(Editable s) {
                 if (TextUtils.isEmpty(s)) {
-                    itemObj.remove("item");
-                    itemObj.put("item","");
+                    itemObj.remove("ItemNumber");
+                    itemObj.put("ItemNumber","");
                 } else {
-                    itemObj.remove("item");
-                    itemObj.put("item",s.toString());
+                    itemObj.remove("ItemNumber");
+                    itemObj.put("ItemNumber",s.toString());
                 }
 
             }

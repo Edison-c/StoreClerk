@@ -4,7 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 
 class DisbursementItem extends HashMap<String, Object> {
-    DisbursementItem(String dept, String collectionpoint, String collectiondate, String status) {
+    DisbursementItem(String id,String dept, String collectionpoint, String collectiondate, String status) {
+        this.put("id",id);
         this.put("dept", dept);
         this.put("collectionpoint", collectionpoint);
         this.put("collectiondate", collectiondate);
@@ -13,7 +14,11 @@ class DisbursementItem extends HashMap<String, Object> {
 }
 
 class DisbursementDetail extends HashMap<String, Object> {
-    DisbursementDetail(String desc, String quantity, String actual, String remark) {
+    DisbursementDetail(String detailId,String listId,String ItemNumber,String Category,String desc, String quantity, String actual, String remark) {
+        this.put("detailId", detailId);
+        this.put("listId", listId);
+        this.put("ItemNumber", ItemNumber);
+        this.put("Category", Category);
         this.put("desc", desc);
         this.put("quantity", quantity);
         this.put("actual", actual);

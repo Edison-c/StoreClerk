@@ -4,6 +4,43 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     >
+    <TextView
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/detail_id"
+        android:layout_weight="1"
+        android:layout_width="270px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        />
+    <TextView
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/detail_listid"
+        android:layout_weight="1"
+        android:layout_width="270px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        />
+
+    <TextView
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/detail_ItemNumber"
+        android:layout_weight="1"
+        android:layout_width="270px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        />
+    <TextView
+        android:visibility="gone"
+        android:gravity="center"
+        android:id="@+id/detail_Category"
+        android:layout_weight="1"
+        android:layout_width="270px"
+        android:layout_height="40dp"
+        android:textSize="15sp"
+        />
 
     <TextView
         android:gravity="center"
