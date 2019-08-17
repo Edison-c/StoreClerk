@@ -81,15 +81,6 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                     replaceFrag(adj, R.id.fragmentSpot);
                     return true;
                 case R.id.navigation_notifications:
-
-                    JSONObject jsonObj = new JSONObject();
-                    try {
-                        jsonObj.put("username", "guoan");
-                        jsonObj.put("password", "password");
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
                     cmd = new Command(MainActivity.this, "getdislist",
                            "http://10.0.2.2:50240/DisbursementLists/GetDisbursementList",null);
                   new AsyncToServer().execute(cmd);
@@ -190,7 +181,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                 JSONArray remark = bb.getJSONArray("remark");
 
                 for(int i = 0;i<desc.length();i++){
-                    details.add(new DisbursementDetail(detailId.getString(i), listId.getString(i),ItemNumber.getString(i),Category.getString(i),desc.getString(i), quantity.getString(i),received.getString(i),remark.getString(i)));
+                    details.add(new DisbursementDetail(detailId.getString(i), listId.getString(i),ItemNumber.getString(i),Category.getString(i),desc.getString(i), quantity.getString(i),quantity.getString(i),remark.getString(i)));
                 }
 
                 data1 = new Bundle();
@@ -200,12 +191,22 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                 replaceFrag(frag, R.id.fragmentSpot);
             }
             else if (context.compareTo("postadjustment")==0){
+                ajustments = new ArrayList<AdjustmentItem>();
+                ajustments.add(new AdjustmentItem("", "","","delete"));
+                adj_data = new Bundle();
+                adj_data.putSerializable("ajustments", ajustments);
+                Fragment adj = new AdjustmentFragment();
+                adj.setArguments(adj_data);
+                replaceFrag(adj, R.id.fragmentSpot);
                 Toast.makeText(this,"Voucher Submited Successfully",Toast.LENGTH_LONG).show();
 
 
             }
             else if(context.compareTo("postdetail")==0){
-                Toast.makeText(this,"Submited Successfully",Toast.LENGTH_LONG).show();
+                cmd = new Command(MainActivity.this, "getdislist",
+                        "http://10.0.2.2:50240/DisbursementLists/GetDisbursementList",null);
+                new AsyncToServer().execute(cmd);
+                Toast.makeText(this,"Detail Submited Successfully",Toast.LENGTH_LONG).show();
             }
         }
         catch (Exception e) {
@@ -243,12 +244,21 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
     @Override
     public void onReturnResults1(List<AdjustmentItem> postdata) {
+
+        boolean flag = true;
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObj = new JSONObject();
         JSONObject tempobj=null;
         int count = postdata.size();
         for(int i =0;i<count;i++){
             tempobj = new JSONObject();
+            if(postdata.get(i).get("ItemNumber").toString().isEmpty() || postdata.get(i).get("QuantityAdjusted").toString().isEmpty() || postdata.get(i).get("Reason").toString().isEmpty() )
+            {
+                flag = false;
+                Toast.makeText(this,"Please Fill Up Fully",Toast.LENGTH_SHORT).show();
+                break;
+            }
+            else{
             try {
                 tempobj.put("ItemNumber",postdata.get(i).get("ItemNumber"));
                 tempobj.put("QuantityAdjusted",postdata.get(i).get("QuantityAdjusted"));
@@ -259,17 +269,19 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
             }
             jsonArray.put(tempobj);
         }
-        String infos = jsonArray.toString();
-        try {
-            jsonObj.put("Infos", infos);
         }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        if(flag) {
+            String infos = jsonArray.toString();
+            try {
+                jsonObj.put("Infos", infos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        cmd = new Command(MainActivity.this, "postadjustment",
-                "http://10.0.2.2:50240/StockAdjustmentVouchers/PostAdjustment",jsonObj);
-        new AsyncToServer().execute(cmd);
+            cmd = new Command(MainActivity.this, "postadjustment",
+                    "http://10.0.2.2:50240/StockAdjustmentVouchers/PostAdjustment", jsonObj);
+            new AsyncToServer().execute(cmd);
+        }
     }
 
 
