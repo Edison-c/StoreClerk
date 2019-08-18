@@ -26,8 +26,9 @@ public class ExpandableListDataPump {
 
         int num = title.size();
         int x=0;
-        boolean flag =true;
+        boolean flag;
         for(int i =0;i<num;i++){
+            flag =true;
             itemdata = new ArrayList<>();
             for(int j=x;j<count;j++){
                 if(title.get(i).getItemnumber().compareTo(data.get(j).getItemnumber())==0){
