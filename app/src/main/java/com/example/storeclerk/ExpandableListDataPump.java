@@ -14,16 +14,19 @@ public class ExpandableListDataPump {
 
         int count = data.size();
         title.add(new Groupname("","",data.get(0).getItemnumber(),"",data.get(0).getDesc(),"","",""));
-        for(int i =1;i<count;i++){
-            Groupname pre = data.get(i-1);
-            Groupname next = data.get(i);
-            if(pre.getItemnumber().compareTo(next.getItemnumber())!=0){
-                title.add(new Groupname("","",next.getItemnumber(),"",next.getDesc(),"","",""));
+        if(count>1) {
+            for (int i = 1; i < count; i++) {
+                Groupname pre = data.get(i - 1);
+                Groupname next = data.get(i);
+                if (pre.getItemnumber().compareTo(next.getItemnumber()) != 0) {
+                    title.add(new Groupname("", "", next.getItemnumber(), "", next.getDesc(), "", "", ""));
+                }
             }
         }
 
         int num = title.size();
         int x=0;
+        boolean flag =true;
         for(int i =0;i<num;i++){
             itemdata = new ArrayList<>();
             for(int j=x;j<count;j++){
@@ -31,11 +34,16 @@ public class ExpandableListDataPump {
                     itemdata.add(data.get(j));
                 }
                 else {
+                    flag = false;
                     x=i;
                     expandableListDetail.put(title.get(i),itemdata);
                 }
             }
+            if(flag){
+                expandableListDetail.put(title.get(i),itemdata);
+            }
         }
+
 
 
 //        List<Groupname> cricket = new ArrayList<Groupname>();
