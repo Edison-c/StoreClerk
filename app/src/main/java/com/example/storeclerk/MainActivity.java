@@ -330,38 +330,48 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
     @Override
     public void onReturnResults2(List<DisbursementDetail> postdata) {
+        boolean flag = true;
         JSONArray jsonArray = new JSONArray();
         JSONObject jsonObj = new JSONObject();
         JSONObject tempobj=null;
         int count = postdata.size();
         for(int i =0;i<count;i++){
             tempobj = new JSONObject();
-            try {
-                tempobj.put("DetailId",postdata.get(i).get("detailId"));
-                tempobj.put("ListId",postdata.get(i).get("listId"));
-                tempobj.put("ItemNumber",postdata.get(i).get("ItemNumber"));
-                tempobj.put("Category",postdata.get(i).get("Category"));
-                tempobj.put("Desc",postdata.get(i).get("desc"));
-                tempobj.put("Quantity",postdata.get(i).get("quantity"));
-                tempobj.put("Actual",postdata.get(i).get("actual"));
-                tempobj.put("Remark",postdata.get(i).get("remark"));
+            int act = Integer.parseInt(postdata.get(i).get("actual").toString());
+            int quant = Integer.parseInt(postdata.get(i).get("quantity").toString());
+            if(act<0 || act>quant){
+                flag = false;
+                Toast.makeText(this,"Please Check Number Range",Toast.LENGTH_SHORT).show();
+                break;
             }
-            catch (Exception e) {
+            else {
+                try {
+                    tempobj.put("DetailId", postdata.get(i).get("detailId"));
+                    tempobj.put("ListId", postdata.get(i).get("listId"));
+                    tempobj.put("ItemNumber", postdata.get(i).get("ItemNumber"));
+                    tempobj.put("Category", postdata.get(i).get("Category"));
+                    tempobj.put("Desc", postdata.get(i).get("desc"));
+                    tempobj.put("Quantity", postdata.get(i).get("quantity"));
+                    tempobj.put("Actual", postdata.get(i).get("actual"));
+                    tempobj.put("Remark", postdata.get(i).get("remark"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                jsonArray.put(tempobj);
+            }
+        }
+        if(flag) {
+            String infos = jsonArray.toString();
+            try {
+                jsonObj.put("Infos1", infos);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            jsonArray.put(tempobj);
-        }
-        String infos = jsonArray.toString();
-        try {
-            jsonObj.put("Infos1", infos);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        cmd = new Command(MainActivity.this, "postdetail",
-                "http://10.0.2.2:50240/DisbursementListDetails/PostDetails",jsonObj);
-        new AsyncToServer().execute(cmd);
+            cmd = new Command(MainActivity.this, "postdetail",
+                    "http://10.0.2.2:50240/DisbursementListDetails/PostDetails", jsonObj);
+            new AsyncToServer().execute(cmd);
+        }
     }
 
     @Override
