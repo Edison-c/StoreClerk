@@ -1,5 +1,6 @@
 package com.example.storeclerk;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import android.content.Context;
@@ -192,8 +193,12 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter {
         }
     }
 
-    public HashMap<Groupname, List<Groupname>> ret_data(){
-        return expandableListDetail;
+    public List<Groupname> ret_data(){
+        List<Groupname> post_ret =new ArrayList<>();
+        for (List<Groupname> value : expandableListDetail.values()) {
+           post_ret.addAll(value);
+        }
+        return post_ret;
     }
 
     class ViewHold {

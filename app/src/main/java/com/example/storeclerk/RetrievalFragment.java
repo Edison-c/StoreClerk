@@ -25,6 +25,8 @@ import java.util.List;
 public class RetrievalFragment extends Fragment
         implements View.OnClickListener, DatePicker.OnDateChangedListener{
 
+    RetrievalFragment.resultInterface3 callback;
+
     private Context context;
     private LinearLayout llDate;
     private TextView tvDate;
@@ -38,18 +40,7 @@ public class RetrievalFragment extends Fragment
     private CustomExpandableListAdapter expandableListAdapter;
     private List<Groupname> expandableListTitle;
     private HashMap<Groupname, List<Groupname>> expandableListDetail;
-    private HashMap<Groupname, List<Groupname>> post_retdata;
-
-
-    IListFrag callback;
-
-    public interface IListFrag {
-         HashMap<Groupname, List<Groupname>> getRetrieval();
-    }
-
-    public void setParent(IListFrag callback) {
-        this.callback = callback;
-    }
+    private List<Groupname> post_retdata;
 
     public RetrievalFragment() {
     }
@@ -90,21 +81,19 @@ public class RetrievalFragment extends Fragment
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
         context =this.getActivity() ;
         date = new StringBuffer();
         initView();
 //        initDateTime();
 
         List<Groupname> retrievalitem = null;
-
         Bundle bundle = getArguments();
         if (bundle != null) {
             retrievalitem = (ArrayList<Groupname>)bundle.getSerializable("retdata");
         }
         expandableListView = v1.findViewById(R.id.expandableListView);
         expandableListDetail = ExpandableListDataPump.getData(retrievalitem);
-        expandableListTitle = new ArrayList<Groupname>(expandableListDetail.keySet());
+        expandableListTitle = new ArrayList<>(expandableListDetail.keySet());
         expandableListAdapter = new CustomExpandableListAdapter(context, expandableListTitle, expandableListDetail);
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
@@ -126,17 +115,26 @@ public class RetrievalFragment extends Fragment
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-
                 return false;
             }
         });
     }
 
 
+    public void setCallback(RetrievalFragment.resultInterface3 callback) {
+        this.callback = callback;
+    }
+
+    public interface resultInterface3 {
+        void onReturnResults3(List<Groupname> postdata);
+    }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
+        if (v.getId()==R.id.ret_done) {
+            post_retdata = expandableListAdapter.ret_data();
+            callback.onReturnResults3(post_retdata);
+            Toast.makeText(getActivity(),"Submited",Toast.LENGTH_SHORT).show();
 //            case R.id.ll_date:
 //                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 //                builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -171,10 +169,6 @@ public class RetrievalFragment extends Fragment
 //                Toast.makeText(getActivity(),todate+" Selected",Toast.LENGTH_SHORT).show();
 //                break;
 
-            case R.id.ret_done:
-                post_retdata = expandableListAdapter.ret_data();
-                Toast.makeText(getActivity(),"Submited",Toast.LENGTH_SHORT).show();
-                break;
         }
     }
 }

@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements AsyncToServer.IServerResponse ,DisbursementFragment.resultInterface,AdjustmentFragment.resultInterface1,DisbursementDetailsFragment.resultInterface2,View.OnClickListener {
+public class MainActivity extends FragmentActivity implements AsyncToServer.IServerResponse ,DisbursementFragment.resultInterface,AdjustmentFragment.resultInterface1,DisbursementDetailsFragment.resultInterface2,RetrievalFragment.resultInterface3,View.OnClickListener {
     private String username;
     private String sessionid;
     private  TextView user;
@@ -203,8 +203,6 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                 adj.setArguments(adj_data);
                 replaceFrag(adj, R.id.fragmentSpot);
                 Toast.makeText(this,"Voucher Submited Successfully",Toast.LENGTH_LONG).show();
-
-
             }
             else if(context.compareTo("postdetail")==0){
                 cmd = new Command(MainActivity.this, "getdislist",
@@ -212,27 +210,42 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                 new AsyncToServer().execute(cmd);
                 Toast.makeText(this,"Detail Submited Successfully",Toast.LENGTH_LONG).show();
             }
-            else if(context.compareTo("getRetrieval")==0){
-                Toast.makeText(this,"Retrieval Successfully",Toast.LENGTH_LONG).show();
-                retdata  = new ArrayList<>();
-                JSONObject aa =  (JSONObject) jsonObj.get("data");
-                JSONArray FormNumber = aa.getJSONArray("FormNumber");
-                JSONArray FormDetailsnumber = aa.getJSONArray("FormDetailsnumber");
-                JSONArray ItemNumber = aa.getJSONArray("ItemNumber");
-                JSONArray BinNumber = aa.getJSONArray("BinNumber");
-                JSONArray Description = aa.getJSONArray("Description");
-                JSONArray Dept = aa.getJSONArray("Dept");
-                JSONArray Needed = aa.getJSONArray("Needed");
-                JSONArray Actual = aa.getJSONArray("Actual");
-
-                for(int i = 0;i<Dept.length();i++){
-                    retdata.add(new Groupname(FormNumber.getString(i),FormDetailsnumber.getString(i), ItemNumber.getString(i),BinNumber.getString(i),Description.getString(i),Dept.getString(i), Needed.getString(i),Actual.getString(i)));
+            else if(context.compareTo("getRetrieval")==0) {
+                JSONObject aa = (JSONObject) jsonObj.get("data");
+                String status = (String) jsonObj.get("status");
+                if (status.compareTo("fail") == 0) {
+                    Toast.makeText(this, "No New Requistions", Toast.LENGTH_LONG).show();
                 }
-                data = new Bundle();
-                data.putSerializable("retdata", retdata);
-                Fragment a = new DisbursementFragment();
-                a.setArguments(data);
-                replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
+                else if(status.compareTo("success")==0){
+                    Toast.makeText(this, "Retrieval Successfully", Toast.LENGTH_LONG).show();
+                    retdata = new ArrayList<>();
+                    JSONArray FormNumber = aa.getJSONArray("FormNumber");
+                    JSONArray FormDetailsnumber = aa.getJSONArray("FormDetailsnumber");
+                    JSONArray ItemNumber = aa.getJSONArray("ItemNumber");
+                    JSONArray BinNumber = aa.getJSONArray("BinNumber");
+                    JSONArray Description = aa.getJSONArray("Description");
+                    JSONArray Dept = aa.getJSONArray("Dept");
+                    JSONArray Needed = aa.getJSONArray("Needed");
+                    JSONArray Actual = aa.getJSONArray("Actual");
+
+                    for (int i = 0; i < Dept.length(); i++) {
+                        retdata.add(new Groupname(FormNumber.getString(i), FormDetailsnumber.getString(i), ItemNumber.getString(i), BinNumber.getString(i), Description.getString(i), Dept.getString(i), Needed.getString(i), Actual.getString(i)));
+                    }
+                    data = new Bundle();
+                    data.putSerializable("retdata", retdata);
+                    Fragment retrieval = new RetrievalFragment();
+                    retrieval.setArguments(data);
+                    replaceFrag(retrieval, R.id.fragmentSpot);
+                }
+            }
+            else if (context.compareTo("postretrieval")==0){
+                String status = (String)jsonObj.get("status");
+                if(status.compareTo("success")==0) {
+                    Toast.makeText(this, "Updated Data Successfully", Toast.LENGTH_LONG).show();
+                    cmd = new Command(MainActivity.this, "getRetrieval",
+                            "http://10.0.2.2:50240/StationeryRetrievalForms/GetRetrieval",null);
+                    new AsyncToServer().execute(cmd);
+                }
             }
         }
         catch (Exception e) {
@@ -252,6 +265,10 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         else if(frag instanceof DisbursementDetailsFragment){
             ((DisbursementDetailsFragment)frag).setCallback(this);
         }
+        else if(frag instanceof RetrievalFragment){
+            ((RetrievalFragment)frag).setCallback(this);
+        }
+
     }
 
     @Override
@@ -344,6 +361,42 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
         cmd = new Command(MainActivity.this, "postdetail",
                 "http://10.0.2.2:50240/DisbursementListDetails/PostDetails",jsonObj);
+        new AsyncToServer().execute(cmd);
+    }
+
+    @Override
+    public void onReturnResults3(List<Groupname> postdata) {
+        JSONArray jsonArray = new JSONArray();
+        JSONObject jsonObj = new JSONObject();
+        JSONObject tempobj=null;
+        int count = postdata.size();
+        for(int i =0;i<count;i++){
+            tempobj = new JSONObject();
+            try {
+                tempobj.put("FormNumber",postdata.get(i).getFormnumber());
+                tempobj.put("FormDetailsnumber",postdata.get(i).getFormdetailnumber());
+                tempobj.put("ItemNumber",postdata.get(i).getItemnumber());
+                tempobj.put("BinNumber",postdata.get(i).getBinnumber());
+                tempobj.put("Description",postdata.get(i).getDesc());
+                tempobj.put("Dept",postdata.get(i).getDept());
+                tempobj.put("Needed",postdata.get(i).getNeeded());
+                tempobj.put("Actual",postdata.get(i).getActual());
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            jsonArray.put(tempobj);
+        }
+        String infos = jsonArray.toString();
+        try {
+            jsonObj.put("RetData", infos);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        cmd = new Command(MainActivity.this, "postretrieval",
+                "http://10.0.2.2:50240/StationeryRetrievalForms/PostRetrieval",jsonObj);
         new AsyncToServer().execute(cmd);
     }
 }

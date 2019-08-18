@@ -9,18 +9,46 @@ public class ExpandableListDataPump {
 
     public static HashMap<Groupname, List<Groupname>> getData(List<Groupname> data) {
         HashMap<Groupname, List<Groupname>> expandableListDetail = new HashMap<>();
+        List<Groupname> title = new ArrayList<>();
+        List<Groupname> itemdata;
 
-        List<Groupname> cricket = new ArrayList<Groupname>();
+        int count = data.size();
+        title.add(new Groupname("","",data.get(0).getItemnumber(),"",data.get(0).getDesc(),"","",""));
+        for(int i =1;i<count;i++){
+            Groupname pre = data.get(i-1);
+            Groupname next = data.get(i);
+            if(pre.getItemnumber().compareTo(next.getItemnumber())!=0){
+                title.add(new Groupname("","",next.getItemnumber(),"",next.getDesc(),"","",""));
+            }
+        }
 
-        Groupname Cricket1 = new Groupname("","","","","Pen","All","20","20");
+        int num = title.size();
+        int x=0;
+        for(int i =0;i<num;i++){
+            itemdata = new ArrayList<>();
+            for(int j=x;j<count;j++){
+                if(title.get(i).getItemnumber().compareTo(data.get(j).getItemnumber())==0){
+                    itemdata.add(data.get(j));
+                }
+                else {
+                    x=i;
+                    expandableListDetail.put(title.get(i),itemdata);
+                }
+            }
+        }
 
-        Groupname Cricket11 = new Groupname("","","","","Pen","iss","5","1");
 
-
-        cricket.add(Cricket11);
-
-
-        expandableListDetail.put(Cricket1, cricket);
+//        List<Groupname> cricket = new ArrayList<Groupname>();
+//
+//        Groupname Cricket1 = new Groupname("","","","","Pen","All","20","20");
+//
+//        Groupname Cricket11 = new Groupname("","","","","Pen","iss","5","1");
+//
+//
+//        cricket.add(Cricket11);
+//
+//
+//        expandableListDetail.put(Cricket1, cricket);
 
         return expandableListDetail;
     }
