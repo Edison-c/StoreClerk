@@ -71,10 +71,9 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    cmd = new Command(MainActivity.this, "get",
-//                            "http://10.0.2.2:50240/Home/GetPerson",obj ,"retrieval");
-//                    new AsyncToServer().execute(cmd);
-                    replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
+                    cmd = new Command(MainActivity.this, "getRetrieval",
+                            "http://10.0.2.2:50240/StationeryRetrievalForms/GetRetrieval",null);
+                    new AsyncToServer().execute(cmd);
                     return true;
                 case R.id.navigation_dashboard:
                     Fragment adj = new AdjustmentFragment();
@@ -108,9 +107,6 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         cmd = new Command(MainActivity.this, "getRetrieval",
                            "http://10.0.2.2:50240/StationeryRetrievalForms/GetRetrieval",null);
                   new AsyncToServer().execute(cmd);
-
-
-       // replaceFrag(new RetrievalFragment(), R.id.fragmentSpot);
     }
 
     @Override
@@ -214,7 +210,7 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                 JSONObject aa = (JSONObject) jsonObj.get("data");
                 String status = (String) jsonObj.get("status");
                 if (status.compareTo("fail") == 0) {
-                    Toast.makeText(this, "No New Requistions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "No New Pending Requistions", Toast.LENGTH_LONG).show();
                 }
                 else if(status.compareTo("success")==0){
                     Toast.makeText(this, "Retrieval Successfully", Toast.LENGTH_LONG).show();
