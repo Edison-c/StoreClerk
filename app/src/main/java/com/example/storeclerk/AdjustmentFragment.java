@@ -62,7 +62,6 @@ public class AdjustmentFragment extends ListFragment implements View.OnClickList
 //        lv = getListView();
         add_new.setOnClickListener(this);
         adj_done.setOnClickListener(this);
-
     }
 
     @Override
@@ -75,7 +74,6 @@ public class AdjustmentFragment extends ListFragment implements View.OnClickList
 
     private void addItem()
     {
-
         Toast.makeText(getActivity(), "add one more lah", Toast.LENGTH_SHORT).show();
         blank = new AdjustmentItem("","","","delete");
         adjustmentitems.add(blank);

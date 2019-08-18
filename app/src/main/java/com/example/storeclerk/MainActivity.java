@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements AsyncToServer.IServerResponse ,DisbursementFragment.resultInterface,AdjustmentFragment.resultInterface1,DisbursementDetailsFragment.resultInterface2,RetrievalFragment.resultInterface3,View.OnClickListener {
+public class MainActivity extends FragmentActivity implements AsyncToServer.IServerResponse ,DisbursementFragment.resultInterface,AdjustmentFragment.resultInterface1,DisbursementDetailsFragment.resultInterface2,RetrievalFragment.resultInterface3,BlankFragment.resultInterface4,View.OnClickListener {
     private String username;
     private String sessionid;
     private  TextView user;
@@ -207,6 +207,8 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
             else if(context.compareTo("getRetrieval")==0) {
                 String status = (String) jsonObj.get("status");
                 if (status.compareTo("fail") == 0) {
+                    Fragment adj = new BlankFragment();
+                    replaceFrag(adj, R.id.fragmentSpot);
                     Toast.makeText(MainActivity.this, "No New Pending Requistions", Toast.LENGTH_LONG).show();
                 }
                 else if(status.compareTo("success")==0){
@@ -262,7 +264,9 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
         else if(frag instanceof RetrievalFragment){
             ((RetrievalFragment)frag).setCallback(this);
         }
-
+        else if(frag instanceof BlankFragment){
+            ((BlankFragment)frag).setCallback(this);
+        }
     }
 
     @Override
@@ -401,6 +405,13 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 
         cmd = new Command(MainActivity.this, "postretrieval",
                 "http://10.0.2.2:50240/StationeryRetrievalForms/PostRetrieval",jsonObj);
+        new AsyncToServer().execute(cmd);
+    }
+
+    @Override
+    public void onReturnResults4(String refresh) {
+        cmd = new Command(MainActivity.this, "getRetrieval",
+                "http://10.0.2.2:50240/StationeryRetrievalForms/GetRetrieval",null);
         new AsyncToServer().execute(cmd);
     }
 }

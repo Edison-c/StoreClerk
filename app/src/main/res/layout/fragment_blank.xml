@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/frag_retrieval"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f4f4f4">
+
+
+        <TextView
+            android:background="#f4f4f4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Retrieval List"
+            android:textSize="30dp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="450dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:text="No New Pending Requisitions" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="right"
+            android:text="Refresh"
+            android:background="@drawable/shape"
+            android:layout_marginRight="10dp"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+</LinearLayout>
