@@ -123,11 +123,9 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
 //        tvDate = findViewById(R.id.tv_date);
         user.setText(username);
         signout.setOnClickListener(this);
-
         ajustments.add(new AdjustmentItem("", "","","delete"));
         adj_data = new Bundle();
         adj_data.putSerializable("ajustments", ajustments);
-
     }
 
     @Override
@@ -207,12 +205,12 @@ public class MainActivity extends FragmentActivity implements AsyncToServer.ISer
                 Toast.makeText(this,"Detail Submited Successfully",Toast.LENGTH_LONG).show();
             }
             else if(context.compareTo("getRetrieval")==0) {
-                JSONObject aa = (JSONObject) jsonObj.get("data");
                 String status = (String) jsonObj.get("status");
                 if (status.compareTo("fail") == 0) {
                     Toast.makeText(MainActivity.this, "No New Pending Requistions", Toast.LENGTH_LONG).show();
                 }
                 else if(status.compareTo("success")==0){
+                    JSONObject aa = (JSONObject) jsonObj.get("data");
                     Toast.makeText(this, "Retrieval Successfully", Toast.LENGTH_LONG).show();
                     retdata = new ArrayList<>();
                     JSONArray FormNumber = aa.getJSONArray("FormNumber");
